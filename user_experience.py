@@ -59,7 +59,7 @@ def load_top_scores(file_path='scores.txt'):
     try:
         with open(file_path, 'r') as file:
             for line in file:
-                player, score = line.strip().split(': ')
+                player, score = line.strip().split(':')
                 leaderboard[player] = int(score)
     except FileNotFoundError:
         print("Leaderboard file not found. Creating a new one...")
