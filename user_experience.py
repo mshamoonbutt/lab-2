@@ -17,11 +17,21 @@ def choose_difficulty():
     #------------------------
     # Add your code here
     #------------------------
-    choice = input("Enter your choice (easy/medium/hard): ")
-    if choice=="easy" or choice=="medium" or choice=="hard":
-        return choice
-    #------------------------
+    print("Choose difficulty level:")
+    print("Easy")
+    print("Medium")
+    print("Hard")
+    
+    difficulty=input("Enter your difficulty level:")
+    while True:
+        choice = input("Enter your choice (easy/medium/hard): ")
+        if choice in ['easy', 'medium', 'hard']:
+            return choice
+        else:
+            print("Invalid choice. Please enter")
 
+    #------------------------
+choose_difficulty()
 #---------------------------------------
 
 def display_leaderboard(leaderboard):
@@ -38,7 +48,23 @@ def display_leaderboard(leaderboard):
     #------------------------
     # Add your code here
     #------------------------
-    raise NotImplementedError("This function is not implemented yet.")
+     if not leaderboard:
+        print("No scores to display.")
+        return
+
+    sorted_leaderboard = sorted(leaderboard.items(), key=lambda x: x[1], reverse=True)
+
+    print("Leaderboard:")
+    print("{:<15} {:<10}".format("Player", "Score"))
+    print("-" * 25)
+
+    for player, score in sorted_leaderboard[:10]:
+        print("{:<15} {:<10}".format(player, score))
+
+    # Example Usage:
+    leaderboard = {"Player1": 100, "Player2": 85, "Player3": 120, "Player4": 95}
+    display_leaderboard(leaderboard)
+
     #------------------------
 
 #---------------------------------------
@@ -57,7 +83,70 @@ def save_score(player_name, score, file_path='scores.txt'):
     #------------------------
     # Add your code here
     #------------------------
-    raise NotImplementedError("This function is not implemented yet.")
+    def save_score(player_name, score, file_path='scores.txt'):
+    """
+    Saves the player's score to a file.
+
+    Parameters:
+    - player_name (str): The name of the player.
+    - score (int): The score achieved by the player.
+    - file_path (str): The file path to save the score.
+
+    Returns: None
+    """
+    with open(file_path, 'a') as file:
+        file.write(f"{player_name},{score}\n")
+
+def display_leaderboard(file_path='scores.txt'):
+    """
+    Displays the leaderboard, showing top scores in descending order.
+
+    Parameters:
+    - file_path (str): The file path from which to load the scores.
+
+    Returns: None
+    """
+    try:
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+            if not lines:
+                print("No scores to display.")
+                return
+
+            # Parse scores from file
+            leaderboard = {}
+            for line in lines:
+                player, score = line.strip().split(',')
+                leaderboard[player] = int(score)
+
+            # Display leaderboard
+            sorted_leaderboard = sorted(leaderboard.items(), key=lambda x: x[1], reverse=True)
+            print("Leaderboard:")
+            print("{:<15} {:<10}".format("Player", "Score"))
+            print("-" * 25)
+            for player, score in sorted_leaderboard[:10]:
+                print("{:<15} {:<10}".format(player, score))
+
+    except FileNotFoundError:
+        print(f"File '{file_path}' not found. No scores to display.")
+
+def game():
+    player_name = input("Enter your name: ")
+    difficulty = choose_difficulty()
+
+    # Play the game and calculate the score (sample logic)
+    # For demonstration purposes, let's assume the player's score is 100
+    score = 100
+
+    # Save the score
+    save_score(player_name, score)
+
+    # Display the leaderboard
+    display_leaderboard()
+
+# Example usage
+game()
+
     #------------------------
 
 #---------------------------------------
@@ -75,7 +164,18 @@ def load_top_scores(file_path='scores.txt'):
     #------------------------
     # Add your code here
     #------------------------
-    raise NotImplementedError("This function is not implemented yet.")
+     try:
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+            leaderboard = {}
+            for line in lines:
+                player, score = line.strip().split(',')
+                leaderboard[player] = int(score)
+            return leaderboard
+
+    except FileNotFoundError:
+        print(f"File '{file_path}' not found. Returning an empty leaderboard.")
+        return {}
     #------------------------
 
 #---------------------------------------
