@@ -132,10 +132,9 @@ def update_score(score, correct):
     #------------------------
     # Add your code here
     #------------------------
-    score=0
-    correct=validate_answer()
-    if correct==True:
-        score+=1    
+    if correct:
+        score += 1
+    return score 
     #------------------------
 
 #---------------------------------------
@@ -153,7 +152,8 @@ def next_round(round_number):
     #------------------------
     # Add your code here
     #------------------------
-    pass
+    return round_number + 1
+    
     #------------------------
 
 #---------------------------------------
@@ -171,7 +171,7 @@ def check_game_over(incorrect_answers):
     #------------------------
     # Add your code here
     #------------------------
-    pass
+    return incorrect_answers >= 3
     #------------------------
 
 #---------------------------------------
